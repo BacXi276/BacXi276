@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Observatoire Des Territoires</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta content="width=device-width, minimum-scale=1, maximum-scale=1, initial-scale=1,user-scalable=no" name="viewport">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>Observatoire des territoires - ANCT - Indicateurs : données et graphiques</title>
+    <meta name="Description" content="Explorez et visualisez sous forme de cartes, graphiques et tableaux interactifs un large éventail de données statistiques finement localisées et mises en perspective sur longue période.">
+    <meta name="application-name" content="Observatoire des territoires - ANCT">
+    <link rel="canonical" href="https://www.observatoire-des-territoires.gouv.fr/outils/cartographie-interactive/">
+    <link rel="shortcut icon" href="https://www.observatoire-des-territoires.gouv.fr/outils/cartographie-interactive/favicon.ico">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+    <link rel="stylesheet" type="text/css" href="~/css/gco5.min.css">
+
+</head>
+<body>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

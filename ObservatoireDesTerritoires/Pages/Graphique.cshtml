@@ -1,0 +1,188 @@
+﻿@page
+@model ObservatoireDesTerritoires.Pages.GraphiqueModel
+@{
+    ViewData["Title"] = "Graphique";
+}
+
+<main role="main" id="indicatorComponent" data-role="component" class="cu-component">
+    <section id="tm-pilotage-sc" class="cu-pilotage" data-link="data-restit{:selectedRestit}" data-restit="m" style="height: 750px;">
+        <div class="mobile-nav-button1">
+            <a href="javascript:void(0)" data-link="{on displayMap}" class="prs" data-jsv="#151^/151^">
+                <span class="upc">Afficher la restitution</span> <span data-gcicon="5"></span>
+            </a>
+        </div>
+        <h1 class="cu-h1 hide-iframe" style="color:#01695d;">Indicateurs : données et graphiques</h1>
+        <h2 class="upc" style="background-color:#01695d; color:#ffffff">CHOISIR DES INDICATEURS</h2>
+        <div class="hide-iframe">
+            <div class="tree_choice flex-container flex-center2 mbvs" style="margin-top: -4px;">
+            </div>
+            <div class="man" data-link="visible{:selectedTree == &#39;__KEYWORD__&#39;}" style="display: none;">
+                <p>Mot-clé&nbsp;: <a title="Retour au nuage de mots-clés" onclick="history.back()" href="javascript:void(0)" class="bold"><script type="jsv#1^"></script><script type="jsv/1^"></script></a></p>
+            </div>
+            <div class="treeindics ui-tree-classic" style="">
+                <div data-role="collapsible-set" class="ui-collapsible-set">
+                    <div class="mts">
+                        <div data-role="collapsible" data-pk="zng" data-level="1" data-nbthemes="3" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+                            <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+                                <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                                    <div><span class="ui-li-label">Zonages et périmètres</span></div>
+                                </button>
+                            </h3>
+                        </div>
+                        <div data-role="collapsible" data-pk="demo" data-level="1" data-nbthemes="7" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+                            <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+                                <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                                    <div><span class="ui-li-label">Démographie</span></div>
+                                </button>
+                            </h3>
+                        </div>
+                        <div data-role="collapsible" data-pk="eco" data-level="1" data-nbthemes="5" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+                            <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+                                <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                                    <div><span class="ui-li-label">Economie générale</span></div>
+                                </button>
+                            </h3>
+                        </div>
+                        <div data-role="collapsible" data-pk="emp" data-level="1" data-nbthemes="4" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+                            <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+                                <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                                    <div><span class="ui-li-label">Emploi</span></div>
+                                </button>
+                            </h3>
+                        </div>
+                        <div data-role="collapsible" data-pk="rev" data-level="1" data-nbthemes="3" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+                            <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+                                <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                                    <div><span class="ui-li-label">Revenus et niveau de vie</span></div>
+                                </button>
+                            </h3>
+                        </div>
+                        <div data-role="collapsible" data-pk="dipl_form" data-level="1" data-nbthemes="3" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+                            <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+                                <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                                    <div><span class="ui-li-label">Diplôme - formation</span></div>
+                                </button>
+                            </h3>
+                        </div>
+                        <div data-role="collapsible" data-pk="mobil" data-level="1" data-nbthemes="3" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+                            <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+                                <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                                    <div><span class="ui-li-label">Mobilités</span></div>
+                                </button>
+                            </h3>
+                        </div>
+                        <div data-role="collapsible" data-pk="logt" data-level="1" data-nbthemes="4" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+                            <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+                                <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                                    <div><span class="ui-li-label">Logement</span></div>
+                                </button>
+                            </h3>
+                        </div>
+                        <div data-role="collapsible" data-pk="equip_serv" data-level="1" data-nbthemes="5" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+                            <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+                                <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                                    <div><span class="ui-li-label">Equipements - services</span></div>
+                                </button>
+                            </h3>
+                        </div>
+                        <div data-role="collapsible" data-pk="env" data-level="1" data-nbthemes="5" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+                            <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+                                <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                                    <div><span class="ui-li-label">Environnement</span></div>
+                                </button>
+                            </h3>
+                        </div>
+                        <div data-role="collapsible" data-pk="vie_soc" data-level="1" data-nbthemes="2" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+                            <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+                                <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                                    <div><span class="ui-li-label">Citoyenneté - vie sociale</span></div>
+                                </button>
+                            </h3>
+                        </div>
+                        <div data-role="collapsible" data-pk="fin_fisc_loc" data-level="1" data-nbthemes="4" class="ui-collapsible ui-collapsible-collapsed" style="position:relative;overflow:hidden;">
+                            <h3 class="ui-collapsible-heading ui-collapsible-heading-collapsed">
+                                <button href="javascript:void(0);" aria-expanded="false" class="ui-collapsible-heading-toggle">
+                                    <div><span class="ui-li-label">Finances publiques et fiscalité locale</span></div>
+                                </button>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="no-display mts errMsg indics_msg small" style="display: none;">Votre recherche n'a pas d'échos</p>
+        </div>
+        <h2 class="upc" style="background-color:#01695d; color:#ffffff">CHANGER LE DÉCOUPAGE GÉOGRAPHIQUE</h2>
+        <div>
+            <div class="js-tabs">
+                <ul class="js-tablist onglet_style c2-on-geo tabs__list" role="tablist">
+                    <li class="js-tablist__item tabs__item" role="presentation" aria-selected="true">
+                        <a data-pk="map1" class="js-tablist__link upc small tabs__link" role="tab" aria-controls="indc2_nav_1" tabindex="0" aria-selected="true">Carte 1</a>
+                    </li>
+                    <li class="js-tablist__item tabs__item" role="presentation" aria-selected="false">
+                        <a data-pk="map2" class="js-tablist__link upc small tabs__link" role="tab" aria-controls="indc2_nav_2" tabindex="-1" aria-selected="false">Carte 2</a>
+                    </li>
+                    <li class="js-tablist__item tabs__item" role="presentation">
+                        &nbsp;
+                    </li>
+                </ul>
+                <section id="indc2_nav_1" class="js-tabcontent js-tabcontent-geo tabs__content" role="tabpanel" aria-labelledby="label_indc2_nav_1">
+                    <div class="flex-container ptvs w100">
+                        <label class="labelgroup" for="tm_view_cb" style="min-width: 52.1625px;">Niveau</label><select id="tm_view_cb" data-link="selectedView" class="flex-item-fluid mlvs" data-jsv-df="">
+                            <option data-jsv="/301_#302_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map37" title="">
+                                EPCI (2021)
+                            </option>
+                            <option data-jsv="#101^#300_#301_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map36" title="">
+                                Commune (2021)
+                            </option>
+                            <option data-jsv="/303_#304_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map9" title="">
+                                Département
+                            </option>
+                            <option data-jsv="/305_#306_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map11" title="">
+                                Région (2016)
+                            </option>
+                        </select>
+                    </div>
+                    <form method="post">
+                        <div class="logout" style="padding-left: 100px; padding-top: 20px;">
+                            <button type="submit" name="logout">Se déconnecter</button>
+                        </div>
+                    </form>
+                </section>
+                <section id="indc2_nav_2" class="js-tabcontent js-tabcontent-geo tabs__content" role="tabpanel" aria-hidden="true" aria-labelledby="label_indc2_nav_2">
+                    <div class="flex-container w100" data-link="visible{:extent_a.length&gt;1}" style="display: flex;">
+                        <label class="labelgroup" for="tm_extent_cb2" style="min-width: 52.1625px;">Étendue</label>
+
+                        <select id="tm_extent_cb2" data-link="selectedExtentFn(~idMap)" class="flex-item-fluid mlvs" data-jsv-df=""><option data-jsv="#328_#329_" value="ext_fra">France</option><option data-jsv="/329_#330_" value="ext_ue27">Europe</option></select>
+                    </div>
+                    <div class="flex-container ptvs w100">
+                        <label class="labelgroup" for="tm_view2_cb" style="min-width: 52.1625px;">Niveau</label><select id="tm_view2_cb" data-link="selectedView2" class="flex-item-fluid mlvs" data-jsv-df="">
+                            <option data-jsv="/334_#335_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map37" title="">
+                                EPCI (2021)
+                            </option>
+                            <option data-jsv="#126^#333_#334_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map36" title="">
+                                Commune (2021)
+                            </option>
+                            <option data-jsv="/336_#337_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map9" title="">
+                                Département
+                            </option>
+                            <option data-jsv="/338_#339_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map11" title="">
+                                Région (2016)
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mtm mbm flex-container medium-hidden large-hidden">
+                        <button data-link="visible{:!selectedIndics_a || selectedIndics_a.length==0} {on displayMap}" class="center" data-jsv="#240^/240^" style="display: block;">Afficher la carte</button>
+                    </div>
+                </section>
+            </div>
+            <div class="flex-container mtvs flex-center2" data-link="css-display{:selectedRestit==&#39;m2&#39; ? &#39;flex&#39;:&#39;none&#39;} disabled{:selectedExtent!=selectedExtent2}" style="display: none;">
+                <input type="checkbox" id="tm-linkedmaps" data-link="linkedMaps">
+                <label class="flex-item-fluid italic small mtn plvs" title="xxx" for="tm-linkedmaps">
+                    Lier les 2 cartes (même cadrage géographique)
+                </label>
+            </div>
+        </div>
+    </section>
+    <section id="tm-restit-sc" class="cu-restit">
+    </section>
+</main>
