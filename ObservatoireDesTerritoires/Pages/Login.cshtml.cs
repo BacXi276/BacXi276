@@ -5,6 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Web;
 
 namespace ObservatoireDesTerritoires.Pages
 {
@@ -23,16 +28,76 @@ namespace ObservatoireDesTerritoires.Pages
 
         public IActionResult OnGet()
         {
-            if (Request.Cookies.ContainsKey("user"))
+            if (Request.Cookies.ContainsKey("authToken"))
             {
-                // Récupérez la valeur du cookie
-                string email = Request.Cookies["user"];
-                string connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=root;Database=Observatoire;";
+
+                string verifEncodedJwt = HttpContext.Request.Cookies["AuthToken"];
+
+                if (string.IsNullOrEmpty(verifEncodedJwt))
+                {
+                    throw new Exception("Jeton manquant");
+                }
+
+                // Configuration de la clé de validation
+                var builder2 = new ConfigurationBuilder()
+                        .SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfigurationRoot configuration2 = builder2.Build();
+                string SecretKey = configuration2.GetConnectionString("Key");
+                var validationKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
+
+                // Configuration des paramètres de validation de jeton
+                var validationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = validationKey,
+                    ValidAudience = "Observatoire",
+                    ValidIssuer = "Observatoire",
+                    ValidateLifetime = true
+                };
+
+                SecurityToken validatedToken;
+
+                try
+                {
+                    // Validation du jeton
+                    var jwtHandler = new JwtSecurityTokenHandler();
+                    jwtHandler.ValidateToken(verifEncodedJwt, validationParameters, out validatedToken);
+                }
+                catch (SecurityTokenExpiredException)
+                {
+                    // Jeton expiré
+                    throw new Exception("Jeton expiré");
+                }
+                catch (SecurityTokenInvalidSignatureException)
+                {
+                    // Signature du jeton invalide
+                    throw new Exception("Jeton non valide");
+                }
+                string decodedEmail = "";
+                // Accès aux claims
+                var jwt = (JwtSecurityToken)validatedToken;
+                foreach (var claim in jwt.Claims)
+                {
+                    if(claim.Type == "Mail")
+                    {
+                        decodedEmail = claim.Value;
+                    }
+                }
+
+
+
+
+
+                var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfigurationRoot configuration = builder.Build();
+                string connectionString = configuration.GetConnectionString("Observatoire");
                 using NpgsqlConnection connection = new NpgsqlConnection(connectionString);
                 connection.Open();
-                using NpgsqlCommand command = new NpgsqlCommand("SELECT code_epci FROM users INNER JOIN epci ON id_log = epci.id_epci WHERE mail_use = @Email", connection);
-                var epci = "";
-                command.Parameters.AddWithValue("@Email", NpgsqlTypes.NpgsqlDbType.Text, email);
+                using NpgsqlCommand command = new NpgsqlCommand("select code_epci from epci inner join users on epci.id_epci = users.id_epci where mail_use = @Email;", connection);
+                string epci = "";
+                command.Parameters.AddWithValue("@Email", NpgsqlTypes.NpgsqlDbType.Text, decodedEmail);
                 using (NpgsqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
@@ -40,6 +105,11 @@ namespace ObservatoireDesTerritoires.Pages
                         epci = reader.GetInt32(0).ToString();
                     }
                 }
+
+
+
+
+
                 command.CommandText = "SELECT isadmin FROM users WHERE mail_use = @Email";
                 int admin = 0;
                 using (NpgsqlDataReader reader = command.ExecuteReader())
@@ -68,7 +138,11 @@ namespace ObservatoireDesTerritoires.Pages
         {
             try
             {
-                string connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=root;Database=Observatoire;";
+                var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                IConfigurationRoot configuration = builder.Build();
+                string connectionString = configuration.GetConnectionString("Observatoire");
                 using NpgsqlConnection connection = new NpgsqlConnection(connectionString);
                 connection.Open();
                 using NpgsqlCommand command = new NpgsqlCommand("SELECT password_use FROM users WHERE mail_use = @Email", connection);
@@ -95,13 +169,59 @@ namespace ObservatoireDesTerritoires.Pages
                             }
                         }
                         // Successful login
-                        // Redirect to graphique page with ville parameter
-                        HttpContext.Response.Cookies.Append("user", email, new CookieOptions
-                        {
-                            Expires = DateTime.Now.AddDays(1)
-                        });
+
+
+                        // recuperer le privilege grace a l'email du post
+
+
                         command.CommandText = "SELECT isadmin FROM users WHERE mail_use = @Email";
                         int admin = 0;
+                        using (NpgsqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                admin = reader.GetInt32(0);
+                            }
+                        }
+
+
+
+                        //set le jwt token
+                        var builder2 = new ConfigurationBuilder()
+                        .SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                        IConfigurationRoot configuration2 = builder2.Build();
+                        string SecretKey = configuration2.GetConnectionString("Key");
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
+
+                        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+
+                        var claims = new[]
+                        {
+                            new Claim("Mail", email),
+                            new Claim("Privilege", admin.ToString())
+                        };
+
+                        var token = new JwtSecurityToken(
+                            issuer:  "Observatoire",
+                            audience: "Observatoire",
+                            claims: claims,
+                            expires: DateTime.Now.AddDays(1),
+                            signingCredentials: creds
+                            );
+                        var encodedJwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+                        HttpContext.Response.Cookies.Append("AuthToken", encodedJwt);
+
+
+
+                        // verif du jeton
+
+
+
+
+                        command.CommandText = "SELECT isadmin FROM users WHERE mail_use = @Email";
                         using (NpgsqlDataReader reader = command.ExecuteReader())
                         {
                             if (reader.Read())

@@ -11,7 +11,7 @@ namespace ObservatoireDesTerritoires.Pages
         public IActionResult? OnGet()
         {
             // Vérifiez si le cookie de session existe
-            if (!Request.Cookies.ContainsKey("user"))
+            if (!Request.Cookies.ContainsKey("AuthToken"))
             {
                 // Redirigez vers la page Login
                 return Redirect("/Login");
@@ -25,7 +25,7 @@ namespace ObservatoireDesTerritoires.Pages
         public IActionResult OnPost(string logout)
         {
             //Supprimer le cookie
-            Response.Cookies.Delete("user");
+            Response.Cookies.Delete("AuthToken");
             //Rediriger vers la page de connexion
             return RedirectToPage("/Login");
         }
