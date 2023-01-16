@@ -167,3 +167,8 @@ C:\Users\Bailly\Desktop\Stage\Nouveau dossier\Stage\ObservatoireDesTerritoires\o
 C:\Users\Bailly\Desktop\Stage\Nouveau dossier\Stage\ObservatoireDesTerritoires\obj\Debug\net6.0\ObservatoireDesTerritoires.pdb
 C:\Users\Bailly\Desktop\Stage\Nouveau dossier\Stage\ObservatoireDesTerritoires\obj\Debug\net6.0\ObservatoireDesTerritoires.genruntimeconfig.cache
 C:\Users\Bailly\Desktop\Stage\Nouveau dossier\Stage\ObservatoireDesTerritoires\obj\Debug\net6.0\ref\ObservatoireDesTerritoires.dll
+C:\Users\Bailly\Desktop\Stage\ObservatoireDesTerritoires\ObservatoireDesTerritoires\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Bailly\Desktop\Stage\ObservatoireDesTerritoires\ObservatoireDesTerritoires\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Bailly\Desktop\Stage\ObservatoireDesTerritoires\ObservatoireDesTerritoires\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Bailly\Desktop\Stage\ObservatoireDesTerritoires\ObservatoireDesTerritoires\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Bailly\Desktop\Stage\ObservatoireDesTerritoires\ObservatoireDesTerritoires\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll

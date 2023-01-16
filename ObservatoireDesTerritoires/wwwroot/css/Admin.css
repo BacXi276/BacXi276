@@ -1,0 +1,90 @@
+﻿body {
+    font-family: 'Poppins',sans-serif;
+}
+
+form {
+}
+
+.addUser {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgray;
+    border-radius: 1em;
+}
+
+label, input, br {
+    margin: 10px;
+    align-self: center;
+}
+
+    input[type="submit"] {
+        align-self: center;
+        margin: 30px;
+        width: 200px;
+    }
+
+.formulaire {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.all {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    position: absolute;
+    margin: auto;
+    top: 25%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+
+
+.button {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    padding-left: 0px;
+    background: #01695d;
+    border: 1px solid #01695d;
+    cursor: pointer;
+    border-radius: 5px;
+    height: 50px;
+    width: 300px;
+    margin: 30px;
+}
+
+.select-box select {
+    background: transparent;
+    width: 200px;
+    height: 35px;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 1;
+    border: 0;
+    border-radius: 0;
+    -webkit-appearance: none;
+}
+
+.select-box {
+    width: 125px;
+    height: 25px;
+    overflow: hidden;
+    background: url(https://dl.dropbox.com/u/122540013/img/arrow.png) no-repeat right #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px 5px 5px 3px;
+}
+
+    .select-box select {
+        padding-right: 0;
+        vertical-align: top !important;
+        text-align: left;
+        height: auto;
+        line-height: 1em;
+    }

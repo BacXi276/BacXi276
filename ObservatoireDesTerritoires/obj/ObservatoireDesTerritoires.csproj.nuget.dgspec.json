@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Bailly\\Desktop\\Stage\\Nouveau dossier\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires.csproj": {}
+    "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Bailly\\Desktop\\Stage\\Nouveau dossier\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires.csproj": {
+    "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Bailly\\Desktop\\Stage\\Nouveau dossier\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires.csproj",
+        "projectUniqueName": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires.csproj",
         "projectName": "ObservatoireDesTerritoires",
-        "projectPath": "C:\\Users\\Bailly\\Desktop\\Stage\\Nouveau dossier\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires.csproj",
+        "projectPath": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires.csproj",
         "packagesPath": "C:\\Users\\Bailly\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Bailly\\Desktop\\Stage\\Nouveau dossier\\Stage\\ObservatoireDesTerritoires\\obj\\",
+        "outputPath": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Bailly\\AppData\\Roaming\\NuGet\\NuGet.Config",

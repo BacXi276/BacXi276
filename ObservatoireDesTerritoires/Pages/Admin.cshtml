@@ -2,3 +2,48 @@
 @model ObservatoireDesTerritoires.Pages.AdminModel
 @{
 }
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Admin.css">
+</head>
+<body>
+    <div class="all" align="center">
+        <form method="post">
+            <button class="button" asp-page-handler="ToGraphique">Aller sur le graphique</button>
+        </form>
+
+        <form name="addUser" method="post">
+            <div class="addUser">
+                <div class="formulaire">
+                    <label for="email">Adresse email :</label>
+                    <input type="text" name="email" required>
+                    <br>
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" name="password" required>
+                    <br>
+                    <label>Code EPCI :</label>
+                    <input type="text" name="code_epci" required>
+                    <br>
+                    <div>
+                        <select name="type" class="select-box">
+                            <option value="0">Utilisateure</option>
+                            <option value="1">Admin</option>
+                        </select>
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.ValidMessage))
+                {
+                    <br>
+                    <div class="valide-message">@Model.ValidMessage</div>
+                }
+                @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                {
+                    <br>
+                    <div class="error-message">@Model.ErrorMessage</div>
+                }
+                <div>
+                    <input class="button" type="submit" value="Ajouter l'utilisateur" asp-page-handler="OnPost">
+                </div>
+            </div>
+        </form>
+    </div>
+</body>

@@ -78,7 +78,7 @@ namespace ObservatoireDesTerritoires.Pages
                 var jwt = (JwtSecurityToken)validatedToken;
                 foreach (var claim in jwt.Claims)
                 {
-                    if(claim.Type == "Mail")
+                    if (claim.Type == "Mail")
                     {
                         decodedEmail = claim.Value;
                     }
@@ -102,7 +102,7 @@ namespace ObservatoireDesTerritoires.Pages
                 {
                     if (reader.Read())
                     {
-                        epci = reader.GetInt32(0).ToString();
+                        epci = reader.GetString(0);
                     }
                 }
 
@@ -138,6 +138,8 @@ namespace ObservatoireDesTerritoires.Pages
         {
             try
             {
+                // Hash du mdp pour voir si les logs sont bonne
+
                 var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
@@ -155,20 +157,28 @@ namespace ObservatoireDesTerritoires.Pages
                     command.CommandText = "SELECT COUNT(*) FROM users WHERE mail_use = @Email AND password_use = @Password; SELECT id_epci FROM users WHERE mail_use = @Email";
                     command.Parameters.AddWithValue("@Password", NpgsqlTypes.NpgsqlDbType.Text, hashedPasswordBdd);
                     long result = (long)command.ExecuteScalar();
+
+
+
+
+                    // recuperer l'epci a partir du formulaire pour redirect sur la bonne page
+
+
                     var epci = "";
                     if (result > 0)
                     {
-                        command.CommandText = "SELECT code_epci FROM users INNER JOIN epci ON id_log = epci.id_epci WHERE mail_use = @Email";
-                        command.Parameters.Clear();
-                        command.Parameters.AddWithValue("@Email", NpgsqlTypes.NpgsqlDbType.Text, email);
-                        using (NpgsqlDataReader reader = command.ExecuteReader())
+                        using NpgsqlCommand command2 = new NpgsqlCommand("select code_epci from epci inner join users on epci.id_epci = users.id_epci where mail_use = @Email;", connection);
+                        Console.WriteLine($"result: {result}");
+                        command2.Parameters.AddWithValue("@Email", NpgsqlTypes.NpgsqlDbType.Text, email);
+                        using (NpgsqlDataReader reader = command2.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                epci = reader.GetInt32(0).ToString();
+
+                                epci = reader.GetString(0);
                             }
                         }
-                        // Successful login
+
 
 
                         // recuperer le privilege grace a l'email du post
@@ -187,6 +197,7 @@ namespace ObservatoireDesTerritoires.Pages
 
 
                         //set le jwt token
+
                         var builder2 = new ConfigurationBuilder()
                         .SetBasePath(Directory.GetCurrentDirectory())
                         .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
@@ -204,7 +215,7 @@ namespace ObservatoireDesTerritoires.Pages
                         };
 
                         var token = new JwtSecurityToken(
-                            issuer:  "Observatoire",
+                            issuer: "Observatoire",
                             audience: "Observatoire",
                             claims: claims,
                             expires: DateTime.Now.AddDays(1),
@@ -212,7 +223,11 @@ namespace ObservatoireDesTerritoires.Pages
                             );
                         var encodedJwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-                        HttpContext.Response.Cookies.Append("AuthToken", encodedJwt);
+                        HttpContext.Response.Cookies.Append("AuthToken", encodedJwt,
+                                    new CookieOptions
+                                    {
+                                        Expires = DateTime.Now.AddDays(30)
+                                    });
 
 
 
