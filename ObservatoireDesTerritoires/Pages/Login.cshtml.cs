@@ -274,7 +274,8 @@ namespace ObservatoireDesTerritoires.Pages
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while trying to process the request.");
-                return BadRequest(ex.Message);
+                ErrorMessage = "Email ou mot de passe incorrect";
+                return Page();
             }
         }
     }
