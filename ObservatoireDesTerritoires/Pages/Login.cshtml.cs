@@ -149,13 +149,10 @@ namespace ObservatoireDesTerritoires.Pages
                 connection.Open();
                 using NpgsqlCommand command = new NpgsqlCommand("SELECT password_use FROM users WHERE mail_use = @Email", connection);
                 command.Parameters.AddWithValue("@Email", NpgsqlTypes.NpgsqlDbType.Text, email);
-                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-                Console.WriteLine(hashedPassword);
                 string hashedPasswordBdd = (string)command.ExecuteScalar();
                 if (BCrypt.Net.BCrypt.Verify(password, hashedPasswordBdd))
                 {
-                    command.CommandText = "SELECT COUNT(*) FROM users WHERE mail_use = @Email AND password_use = @Password; SELECT id_epci FROM users WHERE mail_use = @Email";
-                    command.Parameters.AddWithValue("@Password", NpgsqlTypes.NpgsqlDbType.Text, hashedPasswordBdd);
+                    command.CommandText = "SELECT COUNT(*) FROM users WHERE mail_use = @Email;";
                     long result = (long)command.ExecuteScalar();
 
 
@@ -168,7 +165,6 @@ namespace ObservatoireDesTerritoires.Pages
                     if (result > 0)
                     {
                         using NpgsqlCommand command2 = new NpgsqlCommand("select code_epci from epci inner join users on epci.id_epci = users.id_epci where mail_use = @Email;", connection);
-                        Console.WriteLine($"result: {result}");
                         command2.Parameters.AddWithValue("@Email", NpgsqlTypes.NpgsqlDbType.Text, email);
                         using (NpgsqlDataReader reader = command2.ExecuteReader())
                         {

@@ -105,6 +105,7 @@ namespace ObservatoireDesTerritoires.Pages
                         else
                         {
                             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(Request.Form["password"].ToString());
+                            Console.WriteLine(hashedPassword);
                             using (NpgsqlCommand command2 = new NpgsqlCommand("INSERT INTO users (mail_use, password_use, id_epci, isadmin) VALUES (@email, @password, (Select id_epci from epci where code_epci = @code_epci), @type);", connection))
                             {
                                 string strPassword = Request.Form["password"].ToString();
@@ -114,8 +115,9 @@ namespace ObservatoireDesTerritoires.Pages
                                 command2.Parameters.AddWithValue("@password", NpgsqlTypes.NpgsqlDbType.Text, hashedPassword);
                                 command2.Parameters.AddWithValue("@code_epci", NpgsqlTypes.NpgsqlDbType.Text, strCodeEpci);
                                 command2.Parameters.AddWithValue("@type", NpgsqlTypes.NpgsqlDbType.Integer, intValue);
-                                ValidMessage = "Vous avez ajouter : " + strEmail;
                                 command2.ExecuteNonQuery();
+                                Console.WriteLine(strEmail + hashedPassword + strCodeEpci + intValue);
+                                ValidMessage = "Vous avez ajouter : " + strEmail;
                             }
 
                             connection.Close();
@@ -137,7 +139,6 @@ namespace ObservatoireDesTerritoires.Pages
 
         public IActionResult OnPostToGraphique()
         {
-            Console.WriteLine("-----------------------------------");
             var epci = "";
             try
             {
