@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "1VK18JZI9LVC2IffOBm103YdRf/IId43SY9IDeT2X48=",
+  "Hash": "clLfMKyQbmIe5QNR3HIvdFTG9VDZKGa5mFTlSOEI64E=",
   "Source": "ObservatoireDesTerritoires",
   "BasePath": "_content/ObservatoireDesTerritoires",
   "Mode": "Default",
@@ -83,6 +83,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\gco5.min.css"
+    },
+    {
+      "Identity": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\wwwroot\\css\\Import.css",
+      "SourceId": "ObservatoireDesTerritoires",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\wwwroot\\",
+      "BasePath": "_content/ObservatoireDesTerritoires",
+      "RelativePath": "css/Import.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Import.css"
     },
     {
       "Identity": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\wwwroot\\css\\log.css",

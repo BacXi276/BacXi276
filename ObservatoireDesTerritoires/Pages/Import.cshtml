@@ -1,0 +1,23 @@
+﻿@page
+@model ObservatoireDesTerritoires.Pages.ImportModel
+@{
+    ViewData["Title"] = "Import";
+}
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Import.css">
+</head>
+<main>
+    <div>
+        <form method="post" asp-page-handler="FileCollumn" class="FileForm">
+            <div class="file-input">
+                <input type="file" id="file" class="file">
+                <label for="file">
+                    Sélectionner un fichier
+                    <p class="file-name"></p>
+                </label>
+            </div>
+            <input type="text" class="NbCollumn" name="nbcolumn" placeholder="Entrer le Nombre de Colonnes" required />
+            <input type="submit" class="Importbutton" value="Import" />
+        </form>
+    </div>
+</main>

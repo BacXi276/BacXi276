@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\Admin.css"
     },
     {
+      "Id": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\wwwroot\\css\\Import.css",
+      "PackagePath": "staticwebassets\\css\\Import.css"
+    },
+    {
       "Id": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\wwwroot\\css\\gco5.min.css",
       "PackagePath": "staticwebassets\\css\\gco5.min.css"
     },

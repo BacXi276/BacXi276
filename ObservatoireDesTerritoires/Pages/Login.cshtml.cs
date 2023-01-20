@@ -66,7 +66,12 @@ namespace ObservatoireDesTerritoires.Pages
                 catch (SecurityTokenExpiredException)
                 {
                     // Jeton expiré
-                    throw new Exception("Jeton expiré");
+                    //throw new Exception("Jeton expiré");
+                    //Supprimer le cookie
+                    Response.Cookies.Delete("AuthToken");
+                    //Rediriger vers la page de connexion
+                    return RedirectToPage("/Login");
+
                 }
                 catch (SecurityTokenInvalidSignatureException)
                 {

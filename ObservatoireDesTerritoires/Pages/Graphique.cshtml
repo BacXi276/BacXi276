@@ -192,9 +192,14 @@
                             </option>
                         </select>
                     </div>
-                    <form method="post">
-                        <div class="logout" style="padding-left: 100px; padding-top: 20px;">
-                            <button type="submit" name="logout">Se déconnecter</button>
+                    <div class="import" style="margin-top: 7%;margin-left: 27%;margin-right: 27%;">
+                            <bouton class="button-3" role="button">
+                                <a name="import" href="/Import">Importer un fichier</a>
+                            </bouton>
+                        </div>
+                    <form method="post" asp-page-handler="Logout">
+                        <div class="logout" style="margin-top: 7%;margin-left: 30.5%;margin-right: 30%;">
+                            <button type="submit" class="button-3" role="button" name="logout">Se déconnecter</button>
                         </div>
                     </form>
                 </section>
@@ -235,7 +240,8 @@
     </section>
     <section id="tm-restit-sc" class="cu-restit">
     </section>
-    @if (Model.Model != null)
+    <div style="height: 400px; width:450px; margin-right: 28%;">
+    @if (Model.Model != null && Model.Model.Count() > 0)
     {
         <div style="height:300px; width:450px; margin-right: 28%; overflow-y: scroll;">
             <table class="rwd-table">
@@ -260,5 +266,21 @@
                 </tbody>
             </table>
         </div>
+            @if (Model.Model != null && Model.Model.Count() > 0)
+            {
+                <div class="option">
+                    <form method="post" asp-page-handler="Filter">
+                        <select name="thelist">
+                            @foreach (var item in Model.FilterValues)
+                            {
+                                <option>@item.Libelle</option>
+                            }
+                        </select>
+                        <input type="submit" value="Filtrer" />
+                    </form>
+                </div>
+            }
+            
     }
+    </div>
 </main>

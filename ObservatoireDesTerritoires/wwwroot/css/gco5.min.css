@@ -10711,8 +10711,12 @@ body.rtl .txtright {
 
 .logout {
     align-content: center;
-    padding-top: 10px;
 }
+
+table, tr, td {
+    border-collapse: collapse;
+}
+
 
 .rwd-table {
     margin: 1em 0;
@@ -10774,14 +10778,18 @@ body.rtl .txtright {
     text-align: left;
 }
 
+thead{
+    background: #01695d;
+}
 .rwd-table {
-    background: #34495E;
-    color: #fff;
+    
+    color: #000;
     border-radius: .4em;
     overflow: hidden;
 }
 
-    .rwd-table tr {
+    .rwd-table tbody tr {
+        background: #ffffff;
         border-color: lighten(#34495E, 10%);
     }
 
@@ -10799,5 +10807,61 @@ body.rtl .txtright {
 
 .rwd-table th,
 .rwd-table td:before {
-    color: #dd5;
+    color: #fff;
+}
+
+.button-3 {
+    appearance: none;
+    background-color: #01695d;
+    border: 1px solid rgba(27, 31, 35, .15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 6px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.button-3:focus:not(:focus-visible):not(.focus-visible) {
+    box-shadow: none;
+    outline: none;
+}
+
+    .button-3:hover {
+        background-color: #00443c;
+    }
+
+.button-3:focus {
+    box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+    outline: none;
+}
+
+.button-3:disabled {
+    background-color: #94d3a2;
+    border-color: rgba(27, 31, 35, .1);
+    color: rgba(255, 255, 255, .8);
+    cursor: default;
+}
+
+    .button-3:active {
+        background-color: #01695d;
+        box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+    }
+
+a, a:hover {
+    text-decoration: none;
+    color: #fff;
 }

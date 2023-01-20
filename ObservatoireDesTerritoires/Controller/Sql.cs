@@ -81,8 +81,6 @@ namespace ObservatoireDesTerritoires.Controller
                             if (reader.Read())
                             {
                                 epci = reader.GetString(0);
-                                Console.WriteLine(epci);
-                                Console.WriteLine("--------------------------------");
                                 return epci;
                             }
                         }
