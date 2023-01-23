@@ -7,17 +7,25 @@
     <link rel="stylesheet" type="text/css" href="~/css/Import.css">
 </head>
 <main>
-    <div>
-        <form method="post" asp-page-handler="FileCollumn" class="FileForm">
-            <div class="file-input">
-                <input type="file" id="file" class="file">
-                <label for="file">
-                    Sélectionner un fichier
-                    <p class="file-name"></p>
-                </label>
-            </div>
-            <input type="text" class="NbCollumn" name="nbcolumn" placeholder="Entrer le Nombre de Colonnes" required />
-            <input type="submit" class="Importbutton" value="Import" />
-        </form>
-    </div>
+    @if (string.IsNullOrEmpty(Request.Query["Lign"]))
+    {
+        <div>
+            <form method="post" class="FileForm" asp-page-handler="FileCollumn" enctype="multipart/form-data">
+                <div class="file-input">
+                    <input type="file" id="file" name="file" class="file">
+                    <label for="file">
+                        Sélectionner un fichier
+                        <p class="file-name"></p>
+                    </label>
+                </div>
+                <input type="number" class="NbLEnTête" name="nblentete" placeholder="Nombre de ligne d'en-tête" required />
+                <input type="submit" class="Importbutton" value="Import" />
+                </form>
+                @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                {
+                    <div class="error-message">@Model.ErrorMessage</div>
+                }
+        </div>
+    }
+    
 </main>

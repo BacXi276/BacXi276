@@ -57,7 +57,6 @@ namespace ObservatoireDesTerritoires.Pages
                     // REMPLISSAGE DU TABLEAU
 
                     Model = new List<MyModel>();
-                    // iterer sur cette commande : select id_ville from ville where id_epci = (select id_epci from epci where code_epci = '200029999');
                     string query1 = "select * from ville where id_epci = (select id_epci from epci where code_epci = @code)";
                     NpgsqlCommand command1 = new NpgsqlCommand(query1, connection);
                     string epciParam = Request.Query["epci"].ToString();
@@ -74,13 +73,13 @@ namespace ObservatoireDesTerritoires.Pages
                     {
                         string query2 = "";
                         if (Request.Query["Filter"].ToString() == "") {
-                            query2 = "SELECT * FROM " + Categorie + " INNER JOIN ville ON " + Categorie + ".id_ville = ville.id_ville WHERE ville.id_ville = " + ville_id + ";";
+                            query2 = "SELECT * FROM " + Categorie + " WHERE id_ville = " + ville_id + ";";
                         }
                         else
                         {
                             string filter = Request.Query["Filter"].ToString();
                             filter = filter.Replace("'", "''");
-                            query2 = "SELECT * FROM " + Categorie + " INNER JOIN ville ON " + Categorie + ".id_ville = ville.id_ville WHERE ville.id_ville = " + ville_id + " and libelle_data = '"+ filter + "';";
+                            query2 = "SELECT * FROM " + Categorie + " WHERE id_ville = " + ville_id + " and libelle_data = '"+ filter + "';";
                         }
                         NpgsqlCommand command2 = new NpgsqlCommand(query2, connection);
                         NpgsqlDataReader reader2 = command2.ExecuteReader();
@@ -94,7 +93,7 @@ namespace ObservatoireDesTerritoires.Pages
                                     Id = reader2.GetInt32(0),
                                     Libelle = reader2.GetString(1),
                                     value = reader2.GetString(2),
-                                    Ville = reader2.GetString(5)
+                                    Ville = reader2.GetString(4)
                                 });
                             }
                         }
@@ -177,7 +176,7 @@ namespace ObservatoireDesTerritoires.Pages
             {
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
-                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "zonage_data");
+                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "zonage_view");
             }
             else
             {
@@ -192,7 +191,7 @@ namespace ObservatoireDesTerritoires.Pages
             {
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
-                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "emploi_data");
+                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "emploi_view");
             }
             else
             {
@@ -207,7 +206,7 @@ namespace ObservatoireDesTerritoires.Pages
             {
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
-                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "demographie_data");
+                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "demographie_view");
             }
             else
             {
@@ -222,7 +221,7 @@ namespace ObservatoireDesTerritoires.Pages
             {
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
-                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "economie_data");
+                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "economie_view");
             }
             else
             {
@@ -237,7 +236,7 @@ namespace ObservatoireDesTerritoires.Pages
             {
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
-                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "revenus_data");
+                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "revenus_view");
             }
             else
             {
@@ -252,7 +251,7 @@ namespace ObservatoireDesTerritoires.Pages
             {
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
-                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "diplome_data");
+                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "diplome_view");
             }
             else
             {
@@ -267,7 +266,7 @@ namespace ObservatoireDesTerritoires.Pages
             {
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
-                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "mobilite_data");
+                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "mobilite_view");
             }
             else
             {
@@ -282,7 +281,7 @@ namespace ObservatoireDesTerritoires.Pages
             {
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
-                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "logement_data");
+                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "logement_view");
             }
             else
             {
@@ -297,7 +296,7 @@ namespace ObservatoireDesTerritoires.Pages
             {
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
-                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "equipement_data");
+                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "equipement_view");
             }
             else
             {
@@ -312,7 +311,7 @@ namespace ObservatoireDesTerritoires.Pages
             {
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
-                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "environnement_data");
+                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "environnement_view");
             }
             else
             {
@@ -327,7 +326,7 @@ namespace ObservatoireDesTerritoires.Pages
             {
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
-                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "citoyennete_data");
+                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "citoyennete_view");
             }
             else
             {
@@ -342,7 +341,7 @@ namespace ObservatoireDesTerritoires.Pages
             {
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
-                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "finance_data");
+                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + "finance_view");
             }
             else
             {
