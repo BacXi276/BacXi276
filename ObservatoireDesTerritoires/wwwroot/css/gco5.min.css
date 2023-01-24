@@ -526,11 +526,6 @@ img.fl, img.fr {
     flex-direction: column
 }
 
-#externaldataComponent, #homeComponent, #mapSection, #reportComponent, #zonageComponent, .cu-component, .cu-component2, .cu-restit, .flex-item-fluid, .map-legendH-container {
-    -ms-flex: 1;
-    flex: 1;
-    min-width: 0
-}
 
 .flex-item-first, .item-first {
     -ms-flex-order: -1;
@@ -3369,10 +3364,6 @@ input[type=number], select {
     padding-right: 0
 }
 
-body:not(.rtl) select {
-    padding-left: 3px
-}
-
 body.rtl select {
     padding-right: 3px
 }
@@ -3409,8 +3400,8 @@ input.placeholder_text, textarea.placeholder_text {
         background-image: url(data:image/png;base64,R0lGODlhDQAEAIAAAAAAAP8A/yH5BAEHAAEALAAAAAANAAQAAAILhA+hG5jMDpxvhgIAOw==);
         background-repeat: no-repeat;
         background-position: right center;
-        padding-right: 20px;
-        padding-left: 3px
+        padding-right: 15px;
+        padding-left: 2px
     }
 
     body.rtl select, body.rtl select[size="0"], body.rtl select[size="1"] {

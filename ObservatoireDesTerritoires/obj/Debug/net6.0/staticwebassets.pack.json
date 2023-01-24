@@ -25,6 +25,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\wwwroot\\js\\Diagramme.js",
+      "PackagePath": "staticwebassets\\js\\Diagramme.js"
+    },
+    {
       "Id": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
@@ -259,10 +263,6 @@
     {
       "Id": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\wwwroot\\uploads\\admin.csv",
       "PackagePath": "staticwebassets\\uploads\\admin.csv"
-    },
-    {
-      "Id": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\wwwroot\\uploads\\data.csv",
-      "PackagePath": "staticwebassets\\uploads\\data.csv"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.ObservatoireDesTerritoires.Microsoft.AspNetCore.StaticWebAssets.props",

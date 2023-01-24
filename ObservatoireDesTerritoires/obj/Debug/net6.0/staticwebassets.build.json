@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "XLnZFF+/sGG1DWX4UKbwUFdPDvfLJHb5hvu/tPjMZpo=",
+  "Hash": "nRjxWohVDNd3b/BFHLUr096HQAutJQIFIaWckE2Pn2o=",
   "Source": "ObservatoireDesTerritoires",
   "BasePath": "_content/ObservatoireDesTerritoires",
   "Mode": "Default",
@@ -134,6 +134,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\wwwroot\\js\\Diagramme.js",
+      "SourceId": "ObservatoireDesTerritoires",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\wwwroot\\",
+      "BasePath": "_content/ObservatoireDesTerritoires",
+      "RelativePath": "js/Diagramme.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Diagramme.js"
     },
     {
       "Identity": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\wwwroot\\js\\site.js",
@@ -1137,23 +1154,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\admin.csv"
-    },
-    {
-      "Identity": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\wwwroot\\uploads\\data.csv",
-      "SourceId": "ObservatoireDesTerritoires",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Bailly\\Desktop\\Stage\\ObservatoireDesTerritoires\\ObservatoireDesTerritoires\\wwwroot\\",
-      "BasePath": "_content/ObservatoireDesTerritoires",
-      "RelativePath": "uploads/data.csv",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploads\\data.csv"
     }
   ]
 }

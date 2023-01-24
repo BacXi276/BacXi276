@@ -114,21 +114,42 @@ namespace ObservatoireDesTerritoires.Pages
                 {
                     if (i < 2) continue;
                     string[] values = lines[i].Split(';');
-                    for (int j = 0; j < cols; j++)
+                    if (lines[0] != null)
                     {
-                        tableau2D[counter, j] = values[j];
+                        for (int j = 0; j < cols; j++)
+                        {
+                            tableau2D[counter, j] = values[j];
+                        }
                     }
+                    
                     counter++;
                 }
-                for(int i = 0; i < rows; i++)
+                ColumnList = new List<DivColumn>();
+
+                for (int i = 0; i < rows; i++)
                 {
+                    int temppp = Int32.Parse(Request.Query["Lign"]);
+                    temppp = temppp - 1;
                     ColumnList.Add(new DivColumn
                     {
                         Id = i,
-                        Libelle = tableau2D[i, Int32.Parse(Request.Query["Lign"]) - 1].ToString()
+                        Libelle = tableau2D[i, temppp]
+                    }) ;
+                }
+
+                for (int i = 0; i < rows; i++)
+                {
+                    int temppp = Int32.Parse(Request.Query["Lign"]);
+                    temppp = temppp - 1;
+                    ColumnList.Add(new DivColumn
+                    {
+                        Id = i,
+                        Libelle = tableau2D[i, temppp]
                     });
                 }
-                foreach(DivColumn column in ColumnList)
+
+
+                foreach (DivColumn column in ColumnList)
                 {
                     Console.WriteLine(column.Libelle);
                 }

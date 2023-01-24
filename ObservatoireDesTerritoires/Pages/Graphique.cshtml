@@ -193,10 +193,10 @@
                         </select>
                     </div>
                     <div class="import" style="margin-top: 7%;margin-left: 27%;margin-right: 27%;">
-                            <bouton class="button-3" role="button">
-                                <a name="import" href="/Import">Importer un fichier</a>
-                            </bouton>
-                        </div>
+                        <bouton class="button-3" role="button">
+                            <a name="import" href="/Import">Importer un fichier</a>
+                        </bouton>
+                    </div>
                     <form method="post" asp-page-handler="Logout">
                         <div class="logout" style="margin-top: 7%;margin-left: 30.5%;margin-right: 30%;">
                             <button type="submit" class="button-3" role="button" name="logout">Se déconnecter</button>
@@ -238,49 +238,58 @@
             </div>
         </div>
     </section>
-    <section id="tm-restit-sc" class="cu-restit">
-    </section>
-    <div style="height: 400px; width:450px; margin-right: 28%;">
-    @if (Model.Model != null && Model.Model.Count() > 0)
-    {
-        <div style="height:300px; width:450px; margin-right: 28%; overflow-y: scroll;">
-            <table class="rwd-table">
-                <thead>
-                    <tr>
-                        <th>Libelle</th>
-                        <th>Value</th>
-                        <th>Ville</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @foreach (var item in Model.Model)
-                    {
+    <div style="width:450px;">
+        @if (Model.Model != null && Model.Model.Count() > 0)
+        {
+            <div style="height:300px; width:450px; overflow-y: scroll;">
+                <table id="tableau" class="rwd-table">
+                    <thead>
                         <tr>
-                            <td>@item.Libelle</td>
-                            <td>@item.value</td>
-                            <td>@item.Ville</td>
+                            <th>Libelle</th>
+                            <th>Value</th>
+                            <th>Ville</th>
                         </tr>
-                    }
+                    </thead>
+                    <tbody>
 
-                </tbody>
-            </table>
-        </div>
-            @if (Model.Model != null && Model.Model.Count() > 0)
+                        @foreach (var item in Model.Model)
+                        {
+                            <tr>
+                                <td>@item.Libelle</td>
+                                <td>@item.value</td>
+                                <td>@item.Ville</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        }
+        @if (Model.Model != null && Model.Model.Count() > 0)
+        {
+            <div class="option" style="width: 450px;">
+                <form method="post" asp-page-handler="Filter">
+                    <select id="libelle" name="thelist" style="height: 28px;">
+                        @foreach (var item in Model.FilterValues)
+                        {
+                            <option>@item.Libelle</option>
+                        }
+                    </select>
+                    <input type="submit" value="Filtrer" />
+                </form>
+            </div>
+            @if (!string.IsNullOrEmpty(Request.Query["Filter"]))
             {
-                <div class="option">
-                    <form method="post" asp-page-handler="Filter">
-                        <select name="thelist">
-                            @foreach (var item in Model.FilterValues)
-                            {
-                                <option>@item.Libelle</option>
-                            }
-                        </select>
-                        <input type="submit" value="Filtrer" />
-                    </form>
+                <div style="height: 272px;">
+                    <canvas id="myBaton" style="display: block; box-sizing: border-box; height: 270px; width: 450px;"></canvas>
                 </div>
             }
-            
-    }
+        }
     </div>
+    @if (!string.IsNullOrEmpty(Request.Query["Filter"]))
+    {
+        <div style="width: 420px;height: 600px;display: flex;align-items: center; justify-content:center;">
+            <canvas id="myCamembert" style="display: block; box-sizing: border-box; height: 400px; width: 400px;"></canvas>
+        </div>
+    }
 </main>

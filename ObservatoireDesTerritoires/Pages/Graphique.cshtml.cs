@@ -72,14 +72,18 @@ namespace ObservatoireDesTerritoires.Pages
                     foreach (string ville_id in ids_ville)
                     {
                         string query2 = "";
+                        string filter = Request.Query["Filter"].ToString();
+                        filter = filter.Replace("'", "''");
                         if (Request.Query["Filter"].ToString() == "") {
                             query2 = "SELECT * FROM " + Categorie + " WHERE id_ville = " + ville_id + ";";
                         }
+                        else if (Request.Query["Filter"].ToString() != "")
+                        {
+                            query2 = "SELECT * FROM " + Categorie + " WHERE id_ville = " + ville_id + " and libelle_data = '"+ filter + "';";
+                        }
                         else
                         {
-                            string filter = Request.Query["Filter"].ToString();
-                            filter = filter.Replace("'", "''");
-                            query2 = "SELECT * FROM " + Categorie + " WHERE id_ville = " + ville_id + " and libelle_data = '"+ filter + "';";
+                            query2 = "SELECT * FROM " + Categorie + " WHERE id_ville = " + ville_id + " and libelle_data = '" + filter + "';";
                         }
                         NpgsqlCommand command2 = new NpgsqlCommand(query2, connection);
                         NpgsqlDataReader reader2 = command2.ExecuteReader();

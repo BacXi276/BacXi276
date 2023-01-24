@@ -44,6 +44,10 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "Chart.js": {
+              "target": "Package",
+              "version": "[3.7.1, )"
+            },
             "EPPlus": {
               "target": "Package",
               "version": "[6.1.2, )"
@@ -58,7 +62,7 @@
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
-              "version": "[6.25.1, )"
+              "version": "[6.26.0, )"
             }
           },
           "imports": [
