@@ -161,87 +161,60 @@
             </div>
             <p class="no-display mts errMsg indics_msg small" style="display: none;">Votre recherche n'a pas d'échos</p>
         </div>
-        <h2 class="upc" style="background-color:#01695d; color:#ffffff">CHANGER LE DÉCOUPAGE GÉOGRAPHIQUE</h2>
         <div>
-            <div class="js-tabs">
-                <ul class="js-tablist onglet_style c2-on-geo tabs__list" role="tablist">
-                    <li class="js-tablist__item tabs__item" role="presentation" aria-selected="true">
-                        <a data-pk="map1" class="js-tablist__link upc small tabs__link" role="tab" aria-controls="indc2_nav_1" tabindex="0" aria-selected="true">Carte 1</a>
-                    </li>
-                    <li class="js-tablist__item tabs__item" role="presentation" aria-selected="false">
-                        <a data-pk="map2" class="js-tablist__link upc small tabs__link" role="tab" aria-controls="indc2_nav_2" tabindex="-1" aria-selected="false">Carte 2</a>
-                    </li>
-                    <li class="js-tablist__item tabs__item" role="presentation">
-                        &nbsp;
-                    </li>
-                </ul>
-                <section id="indc2_nav_1" class="js-tabcontent js-tabcontent-geo tabs__content" role="tabpanel" aria-labelledby="label_indc2_nav_1">
-                    <div class="flex-container ptvs w100">
-                        <label class="labelgroup" for="tm_view_cb" style="min-width: 52.1625px;">Niveau</label><select id="tm_view_cb" data-link="selectedView" class="flex-item-fluid mlvs" data-jsv-df="">
-                            <option data-jsv="/301_#302_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map37" title="">
-                                EPCI (2021)
-                            </option>
-                            <option data-jsv="#101^#300_#301_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map36" title="">
-                                Commune (2021)
-                            </option>
-                            <option data-jsv="/303_#304_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map9" title="">
-                                Département
-                            </option>
-                            <option data-jsv="/305_#306_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map11" title="">
-                                Région (2016)
-                            </option>
-                        </select>
-                    </div>
-                    <div class="import" style="margin-top: 7%;margin-left: 27%;margin-right: 27%;">
-                        <bouton class="button-3" role="button">
-                            <a name="import" href="/Import">Importer un fichier</a>
-                        </bouton>
-                    </div>
-                    <form method="post" asp-page-handler="Logout">
-                        <div class="logout" style="margin-top: 7%;margin-left: 30.5%;margin-right: 30%;">
-                            <button type="submit" class="button-3" role="button" name="logout">Se déconnecter</button>
+                        @if (!string.IsNullOrEmpty(Request.Query["Filter"]))
+            {
+                <h2 class="upc" style="background-color:#01695d; color:#ffffff">COMPARAISON ENTRE 2 VILLE</h2>
+                <div class="js-tabs">
+                    <ul class="js-tablist onglet_style c2-on-geo tabs__list" role="tablist">
+                        <li class="js-tablist__item tabs__item" role="presentation" aria-selected="true">
+                            <a data-pk="map1" class="js-tablist__link upc small tabs__link" role="tab" aria-controls="indc2_nav_1" tabindex="0" aria-selected="true">Carte 1</a>
+                        </li>
+                        <li class="js-tablist__item tabs__item" role="presentation" aria-selected="false">
+                            <a data-pk="map2" class="js-tablist__link upc small tabs__link" role="tab" aria-controls="indc2_nav_2" tabindex="-1" aria-selected="false">Carte 2</a>
+                        </li>
+                        <li class="js-tablist__item tabs__item" role="presentation">
+                            &nbsp;
+                        </li>
+                    </ul>
+                    <section id="indc2_nav_1" class="js-tabcontent js-tabcontent-geo tabs__content" role="tabpanel" aria-labelledby="label_indc2_nav_1">
+                        <div class="flex-container ptvs w100">
+                            <form method="post" asp-page-handler="Ville">
+                                <select id="ville" name="ville1" style="height: 28px;width: 92px;">
+                                    @foreach (var item in Model.FilterVilles)
+                                    {
+                                        <option>@item.ville</option>
+                                    }
+                                </select>
+                                <select id="ville" name="ville2" style="height: 28px;width: 93px;">
+                                    @foreach (var item in Model.FilterVilles)
+                                    {
+                                        <option>@item.ville</option>
+                                    }
+                                </select>
+                                <input type="submit" value="Comparer" style="padding: 3px 0px; width: 65px;" />
+                            </form>
                         </div>
-                    </form>
-                </section>
-                <section id="indc2_nav_2" class="js-tabcontent js-tabcontent-geo tabs__content" role="tabpanel" aria-hidden="true" aria-labelledby="label_indc2_nav_2">
-                    <div class="flex-container w100" data-link="visible{:extent_a.length&gt;1}" style="display: flex;">
-                        <label class="labelgroup" for="tm_extent_cb2" style="min-width: 52.1625px;">Étendue</label>
 
-                        <select id="tm_extent_cb2" data-link="selectedExtentFn(~idMap)" class="flex-item-fluid mlvs" data-jsv-df=""><option data-jsv="#328_#329_" value="ext_fra">France</option><option data-jsv="/329_#330_" value="ext_ue27">Europe</option></select>
-                    </div>
-                    <div class="flex-container ptvs w100">
-                        <label class="labelgroup" for="tm_view2_cb" style="min-width: 52.1625px;">Niveau</label><select id="tm_view2_cb" data-link="selectedView2" class="flex-item-fluid mlvs" data-jsv-df="">
-                            <option data-jsv="/334_#335_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map37" title="">
-                                EPCI (2021)
-                            </option>
-                            <option data-jsv="#126^#333_#334_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map36" title="">
-                                Commune (2021)
-                            </option>
-                            <option data-jsv="/336_#337_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map9" title="">
-                                Département
-                            </option>
-                            <option data-jsv="/338_#339_" data-link="title{: !~root.nivgeosIndics || ~root.nivgeosIndics==&#39;*&#39; || ~root.nivgeosIndics.split(&#39;|&#39;).indexOf(id_nivgeo) &gt;= 0 ? &#39;&#39; : &#39;Non compatible avec cet indicateur&#39;}" value="map11" title="">
-                                Région (2016)
-                            </option>
-                        </select>
-                    </div>
-                    <div class="mtm mbm flex-container medium-hidden large-hidden">
-                        <button data-link="visible{:!selectedIndics_a || selectedIndics_a.length==0} {on displayMap}" class="center" data-jsv="#240^/240^" style="display: block;">Afficher la carte</button>
-                    </div>
-                </section>
-            </div>
-            <div class="flex-container mtvs flex-center2" data-link="css-display{:selectedRestit==&#39;m2&#39; ? &#39;flex&#39;:&#39;none&#39;} disabled{:selectedExtent!=selectedExtent2}" style="display: none;">
-                <input type="checkbox" id="tm-linkedmaps" data-link="linkedMaps">
-                <label class="flex-item-fluid italic small mtn plvs" title="xxx" for="tm-linkedmaps">
-                    Lier les 2 cartes (même cadrage géographique)
-                </label>
-            </div>
+                    </section>
+                </div>
+            }
         </div>
+        <div class="import" style="display: flex; justify-content: center; align-items: center; margin: 20px;">
+                <bouton class="button-3" role="button">
+                    <a name="import" href="/Import">Importer un fichier</a>
+                </bouton>
+            </div>
+            <form method="post" asp-page-handler="Logout">
+            <div class="logout" style="display: flex; justify-content: center; align-items: center; margin: 20px;">
+                    <button type="submit" class="button-3" role="button" name="logout">Se déconnecter</button>
+                </div>
+            </form>
     </section>
-    <div style="width:450px;">
+    <div style="width:487.5px;">
         @if (Model.Model != null && Model.Model.Count() > 0)
         {
-            <div style="height:300px; width:450px; overflow-y: scroll;">
+            <div style="height:300px; width:487.5px; overflow-y: scroll;">
                 <table id="tableau" class="rwd-table">
                     <thead>
                         <tr>
@@ -267,9 +240,9 @@
         }
         @if (Model.Model != null && Model.Model.Count() > 0)
         {
-            <div class="option" style="width: 450px;">
+            <div class="option" style="width: 487.5px;">
                 <form method="post" asp-page-handler="Filter">
-                    <select id="libelle" name="thelist" style="height: 28px;">
+                    <select id="libelle" name="thelist" style="height: 28px; width: 426px;">
                         @foreach (var item in Model.FilterValues)
                         {
                             <option>@item.Libelle</option>
@@ -280,7 +253,7 @@
             </div>
             @if (!string.IsNullOrEmpty(Request.Query["Filter"]))
             {
-                <div style="height: 272px;">
+                <div style="height: 272px;display: flex;justify-content: center;">
                     <canvas id="myBaton" style="display: block; box-sizing: border-box; height: 270px; width: 450px;"></canvas>
                 </div>
             }
@@ -288,8 +261,10 @@
     </div>
     @if (!string.IsNullOrEmpty(Request.Query["Filter"]))
     {
-        <div style="width: 420px;height: 600px;display: flex;align-items: center; justify-content:center;">
-            <canvas id="myCamembert" style="display: block; box-sizing: border-box; height: 400px; width: 400px;"></canvas>
+        <div style="width: 457.5px;height: 600px;display: flex;align-items: center; justify-content:center;">
+            <div style="padding: 10px;">
+                <canvas id="myCamembert" style="display: block; box-sizing: border-box; height: 400px; width: 400px;"></canvas>
+            </div>
         </div>
     }
 </main>

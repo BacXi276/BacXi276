@@ -13,6 +13,7 @@ using System.Data.SqlClient;
 using ObservatoireDesTerritoires.Controller;
 using System.Windows.Input;
 using System.Web;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ObservatoireDesTerritoires.Pages
 {
@@ -27,10 +28,15 @@ namespace ObservatoireDesTerritoires.Pages
     {
         public string Libelle { get; set; }
     }
+    public class FilterVille
+    {
+        public string ville { get; set; }
+    }
     public class GraphiqueModel : PageModel
     {
         public List<MyModel> Model { get; set; }
         public List<FilterValue> FilterValues { get; set; }
+        public List<FilterVille> FilterVilles { get; set; }
         public int data { get; set; }
         public string category { get; set; }
 
@@ -38,7 +44,6 @@ namespace ObservatoireDesTerritoires.Pages
 
         public IActionResult? OnGet()
         {
-            
             var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
@@ -50,58 +55,64 @@ namespace ObservatoireDesTerritoires.Pages
             HttpContext.Response.Cookies.Append("category", category, options);
             using NpgsqlConnection connection = new NpgsqlConnection(connectionString);
             {
-
+                string epciParam = Request.Query["epci"].ToString();
+                string Categorie = Request.Query["Categorie"].ToString();
+                connection.Open();
+                string VilleQuery = "select libelle_ville from ville where id_epci = (select id_epci from epci where code_epci = '" + epciParam + "');";
+                FilterVilles = new List<FilterVille>();
+                NpgsqlCommand command4 = new NpgsqlCommand(VilleQuery, connection);
+                NpgsqlDataReader reader4 = command4.ExecuteReader();
+                while (reader4.Read())
+                {
+                    // CREE DES OBJETS
+                    FilterVilles.Add(new FilterVille
+                    {
+                        ville = reader4.GetString(0)
+                    });
+                }
+                connection.Close();
                 connection.Open();
                 if (Request.Query["Categorie"].ToString() != "")
                 {
                     // REMPLISSAGE DU TABLEAU
 
                     Model = new List<MyModel>();
-                    string query1 = "select * from ville where id_epci = (select id_epci from epci where code_epci = @code)";
-                    NpgsqlCommand command1 = new NpgsqlCommand(query1, connection);
-                    string epciParam = Request.Query["epci"].ToString();
-                    command1.Parameters.AddWithValue("@code", NpgsqlTypes.NpgsqlDbType.Text, epciParam);
-                    NpgsqlDataReader reader1 = command1.ExecuteReader();
-                    List<string> ids_ville = new List<string>();
-                    while (reader1.Read())
+                    string query = ""; 
+                    string filter = Request.Query["Filter"].ToString();
+                    filter = filter.Replace("'", "''");
+                    string Ville_1 = Request.Query["Ville_1"].ToString();
+                    string Ville_2 = Request.Query["Ville_2"].ToString();
+                    if (Request.Query["Filter"].ToString() == "")
                     {
-                        ids_ville.Add(reader1.GetInt32(0).ToString());
-                    }                 
-                    reader1.Close();
-                    string Categorie = Request.Query["Categorie"].ToString();
-                    foreach (string ville_id in ids_ville)
+                        query = "SELECT * FROM " + Categorie + "_test where code_epci = @code";
+                    }
+                    else
                     {
-                        string query2 = "";
-                        string filter = Request.Query["Filter"].ToString();
-                        filter = filter.Replace("'", "''");
-                        if (Request.Query["Filter"].ToString() == "") {
-                            query2 = "SELECT * FROM " + Categorie + " WHERE id_ville = " + ville_id + ";";
-                        }
-                        else if (Request.Query["Filter"].ToString() != "")
+                        if (Request.Query["Filter"].ToString() != "" && Request.Query["Ville_1"].ToString() == "" && Request.Query["Ville_2"].ToString() == "")
                         {
-                            query2 = "SELECT * FROM " + Categorie + " WHERE id_ville = " + ville_id + " and libelle_data = '"+ filter + "';";
+                            query = "SELECT * FROM " + Categorie + "_test where code_epci = @code and libelle_data = '" + filter + "';";
                         }
                         else
                         {
-                            query2 = "SELECT * FROM " + Categorie + " WHERE id_ville = " + ville_id + " and libelle_data = '" + filter + "';";
+                            query = "SELECT * FROM " + Categorie + "_test where code_epci = @code and libelle_data = '" + filter + "' and (libelle_ville = '" + Ville_1 + "' or libelle_ville = '" + Ville_2 + "');";
                         }
-                        NpgsqlCommand command2 = new NpgsqlCommand(query2, connection);
-                        NpgsqlDataReader reader2 = command2.ExecuteReader();
+                    }
 
-                        if (reader2.HasRows)
+                    NpgsqlCommand command = new NpgsqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@code", NpgsqlTypes.NpgsqlDbType.Text, epciParam);
+                    NpgsqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
                         {
-                            while (reader2.Read())
+                            Model.Add(new MyModel
                             {
-                                Model.Add(new MyModel
-                                {
-                                    Id = reader2.GetInt32(0),
-                                    Libelle = reader2.GetString(1),
-                                    value = reader2.GetString(2),
-                                    Ville = reader2.GetString(4)
-                                });
-                            }
+                                Id = reader.GetInt32(0),
+                                Libelle = reader.GetString(1),
+                                value = reader.GetString(2),
+                                Ville = reader.GetString(4)
+                            });
                         }
-                        reader2.Close();
                     }
                     connection.Close();
 
@@ -145,10 +156,10 @@ namespace ObservatoireDesTerritoires.Pages
             //Rediriger vers la page de connexion
             return RedirectToPage("/Login");
         }
-        
+
         public IActionResult OnPostFilter()
         {
-            
+
             if (HttpContext.Request.Cookies.ContainsKey("AuthToken"))
             {
                 Console.WriteLine(category + " DANS LE ONPOST");
@@ -159,6 +170,29 @@ namespace ObservatoireDesTerritoires.Pages
                 Console.WriteLine(category);
                 selectedValue = HttpUtility.UrlEncode(selectedValue);
                 return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + category + "&" + "Filter=" + selectedValue);
+            }
+            else
+            {
+                Console.WriteLine("pas passé le test");
+                return null;
+            }
+        }
+
+        [HttpPost]
+        public IActionResult OnPostVille()
+        {
+            if (HttpContext.Request.Cookies.ContainsKey("AuthToken"))
+            {
+                Console.WriteLine(category + " DANS LE ONPOST");
+                string cookie = HttpContext.Request.Cookies["AuthToken"];
+                string result = _epciController.GetEpciByCookie(cookie);
+                string ville1 = Request.Form["ville1"].ToString();
+                string ville2 = Request.Form["ville2"].ToString();
+                string filter = Request.Query["Filter"].ToString();
+                Console.WriteLine(filter);
+                category = HttpContext.Request.Cookies["category"];
+                Console.WriteLine(category);
+                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + category + "&" + "Filter=" + filter + "&Ville_1=" + ville1 + "&Ville_2=" + ville2);
             }
             else
             {
