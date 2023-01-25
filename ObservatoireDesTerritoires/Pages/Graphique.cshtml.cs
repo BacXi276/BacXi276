@@ -14,6 +14,7 @@ using ObservatoireDesTerritoires.Controller;
 using System.Windows.Input;
 using System.Web;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Net;
 
 namespace ObservatoireDesTerritoires.Pages
 {
@@ -81,20 +82,22 @@ namespace ObservatoireDesTerritoires.Pages
                     string filter = Request.Query["Filter"].ToString();
                     filter = filter.Replace("'", "''");
                     string Ville_1 = Request.Query["Ville_1"].ToString();
+                    Ville_1 = Ville_1.Replace("'", "''");
                     string Ville_2 = Request.Query["Ville_2"].ToString();
+                    Ville_2 = Ville_2.Replace("'", "''");
                     if (Request.Query["Filter"].ToString() == "")
                     {
-                        query = "SELECT * FROM " + Categorie + "_test where code_epci = @code";
+                        query = "SELECT * FROM " + Categorie + " where code_epci = @code";
                     }
                     else
                     {
                         if (Request.Query["Filter"].ToString() != "" && Request.Query["Ville_1"].ToString() == "" && Request.Query["Ville_2"].ToString() == "")
                         {
-                            query = "SELECT * FROM " + Categorie + "_test where code_epci = @code and libelle_data = '" + filter + "';";
+                            query = "SELECT * FROM " + Categorie + " where code_epci = @code and libelle_data = '" + filter + "';";
                         }
                         else
                         {
-                            query = "SELECT * FROM " + Categorie + "_test where code_epci = @code and libelle_data = '" + filter + "' and (libelle_ville = '" + Ville_1 + "' or libelle_ville = '" + Ville_2 + "');";
+                            query = "SELECT * FROM " + Categorie + " where code_epci = @code and libelle_data = '" + filter + "' and (libelle_ville = '" + Ville_1 + "' or libelle_ville = '" + Ville_2 + "');";
                         }
                     }
 
@@ -186,9 +189,9 @@ namespace ObservatoireDesTerritoires.Pages
                 Console.WriteLine(category + " DANS LE ONPOST");
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
-                string ville1 = Request.Form["ville1"].ToString();
-                string ville2 = Request.Form["ville2"].ToString();
-                string filter = Request.Query["Filter"].ToString();
+                string ville1 = WebUtility.UrlEncode(Request.Form["ville1"].ToString());
+                string ville2 = WebUtility.UrlEncode(Request.Form["ville2"].ToString());
+                string filter = Request.Form["thelist"].ToString();
                 Console.WriteLine(filter);
                 category = HttpContext.Request.Cookies["category"];
                 Console.WriteLine(category);

@@ -191,8 +191,14 @@
                                     {
                                         <option>@item.ville</option>
                                     }
-                                </select>
+                                </select>                               
                                 <input type="submit" value="Comparer" style="padding: 3px 0px; width: 65px;" />
+                                <select hidden id="libelle" name="thelist" style="visibility: hidden">
+                                    @foreach (var item in Model.FilterValues)
+                                    {
+                                        <option>@item.Libelle</option>
+                                    }
+                                </select>
                             </form>
                         </div>
 
