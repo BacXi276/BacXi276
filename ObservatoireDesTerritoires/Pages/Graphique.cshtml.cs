@@ -38,6 +38,9 @@ namespace ObservatoireDesTerritoires.Pages
         public List<MyModel> Model { get; set; }
         public List<FilterValue> FilterValues { get; set; }
         public List<FilterVille> FilterVilles { get; set; }
+        public string SelectedVille1 { get; set; }
+        public string SelectedVille2 { get; set; }
+        public string SelectedFilter { get; set; }
         public int data { get; set; }
         public string category { get; set; }
 
@@ -59,7 +62,7 @@ namespace ObservatoireDesTerritoires.Pages
                 string epciParam = Request.Query["epci"].ToString();
                 string Categorie = Request.Query["Categorie"].ToString();
                 connection.Open();
-                string VilleQuery = "select libelle_ville from ville where id_epci = (select id_epci from epci where code_epci = '" + epciParam + "');";
+                string VilleQuery = "select libelle_ville from ville where id_epci = (select id_epci from epci where code_epci = '" + epciParam + "') order by libelle_ville;";
                 FilterVilles = new List<FilterVille>();
                 NpgsqlCommand command4 = new NpgsqlCommand(VilleQuery, connection);
                 NpgsqlDataReader reader4 = command4.ExecuteReader();
@@ -80,11 +83,15 @@ namespace ObservatoireDesTerritoires.Pages
                     Model = new List<MyModel>();
                     string query = ""; 
                     string filter = Request.Query["Filter"].ToString();
+                    SelectedFilter = Request.Query["Filter"].ToString();
                     filter = filter.Replace("'", "''");
                     string Ville_1 = Request.Query["Ville_1"].ToString();
+                    SelectedVille1 = Request.Query["Ville_1"].ToString();
                     Ville_1 = Ville_1.Replace("'", "''");
                     string Ville_2 = Request.Query["Ville_2"].ToString();
+                    SelectedVille2 = Request.Query["Ville_2"].ToString();
                     Ville_2 = Ville_2.Replace("'", "''");
+                     
                     if (Request.Query["Filter"].ToString() == "")
                     {
                         query = "SELECT * FROM " + Categorie + " where code_epci = @code";
@@ -165,14 +172,22 @@ namespace ObservatoireDesTerritoires.Pages
 
             if (HttpContext.Request.Cookies.ContainsKey("AuthToken"))
             {
-                Console.WriteLine(category + " DANS LE ONPOST");
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
+                string ville1 = WebUtility.UrlEncode(Request.Form["ville1"].ToString());
+                string ville2 = WebUtility.UrlEncode(Request.Form["ville2"].ToString());
                 string selectedValue = Request.Form["thelist"].ToString();
                 category = HttpContext.Request.Cookies["category"];
-                Console.WriteLine(category);
+                Console.WriteLine(ville1 + ville2 + selectedValue);
                 selectedValue = HttpUtility.UrlEncode(selectedValue);
-                return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + category + "&" + "Filter=" + selectedValue);
+                if (string.IsNullOrEmpty(ville1) || string.IsNullOrEmpty(ville2))
+                {
+                    return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + category + "&" + "Filter=" + selectedValue);
+                }
+                else
+                {
+                    return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + category + "&" + "Filter=" + selectedValue + "&Ville_1=" + ville1 + "&Ville_2=" + ville2);
+                }
             }
             else
             {
@@ -186,15 +201,13 @@ namespace ObservatoireDesTerritoires.Pages
         {
             if (HttpContext.Request.Cookies.ContainsKey("AuthToken"))
             {
-                Console.WriteLine(category + " DANS LE ONPOST");
                 string cookie = HttpContext.Request.Cookies["AuthToken"];
                 string result = _epciController.GetEpciByCookie(cookie);
                 string ville1 = WebUtility.UrlEncode(Request.Form["ville1"].ToString());
                 string ville2 = WebUtility.UrlEncode(Request.Form["ville2"].ToString());
-                string filter = Request.Form["thelist"].ToString();
-                Console.WriteLine(filter);
+                string filter = WebUtility.UrlEncode(Request.Form["thelist"].ToString());
+                Console.WriteLine(ville1 + ville2 + filter);
                 category = HttpContext.Request.Cookies["category"];
-                Console.WriteLine(category);
                 return Redirect("/Graphique?epci=" + result + "&" + "Categorie=" + category + "&" + "Filter=" + filter + "&Ville_1=" + ville1 + "&Ville_2=" + ville2);
             }
             else

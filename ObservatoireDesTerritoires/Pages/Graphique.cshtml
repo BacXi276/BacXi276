@@ -183,20 +183,20 @@
                                 <select id="ville" name="ville1" style="height: 28px;width: 92px;">
                                     @foreach (var item in Model.FilterVilles)
                                     {
-                                        <option>@item.ville</option>
+                                        <option selected="@(item.ville == Model.SelectedVille1)">@item.ville</option>
                                     }
                                 </select>
                                 <select id="ville" name="ville2" style="height: 28px;width: 93px;">
                                     @foreach (var item in Model.FilterVilles)
                                     {
-                                        <option>@item.ville</option>
+                                        <option selected="@(item.ville == Model.SelectedVille2)">@item.ville</option>
                                     }
                                 </select>                               
                                 <input type="submit" value="Comparer" style="padding: 3px 0px; width: 65px;" />
                                 <select hidden id="libelle" name="thelist" style="visibility: hidden">
                                     @foreach (var item in Model.FilterValues)
                                     {
-                                        <option>@item.Libelle</option>
+                                        <option selected="@(item.Libelle == Model.SelectedFilter)">@item.Libelle</option>
                                     }
                                 </select>
                             </form>
@@ -251,7 +251,7 @@
                     <select id="libelle" name="thelist" style="height: 28px; width: 426px;">
                         @foreach (var item in Model.FilterValues)
                         {
-                            <option>@item.Libelle</option>
+                            <option selected="@(item.Libelle == Model.SelectedFilter)">@item.Libelle</option>
                         }
                     </select>
                     <input type="submit" value="Filtrer" />
