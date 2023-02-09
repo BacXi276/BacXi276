@@ -67,3 +67,7 @@ C:\Users\Bailly\Desktop\Stage\ObservatoireDesTerritoires\ObservatoireDesTerritoi
 C:\Users\Bailly\Desktop\Stage\ObservatoireDesTerritoires\ObservatoireDesTerritoires\obj\Debug\net6.0\ObservatoireDesTerritoires.pdb
 C:\Users\Bailly\Desktop\Stage\ObservatoireDesTerritoires\ObservatoireDesTerritoires\obj\Debug\net6.0\ObservatoireDesTerritoires.genruntimeconfig.cache
 C:\Users\Bailly\Desktop\Stage\ObservatoireDesTerritoires\ObservatoireDesTerritoires\obj\Debug\net6.0\ref\ObservatoireDesTerritoires.dll
+C:\Users\Bailly\Desktop\Stage\ObservatoireDesTerritoires\ObservatoireDesTerritoires\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Bailly\Desktop\Stage\ObservatoireDesTerritoires\ObservatoireDesTerritoires\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+C:\Users\Bailly\Desktop\Stage\ObservatoireDesTerritoires\ObservatoireDesTerritoires\bin\Debug\net6.0\System.Text.Json.dll
+C:\Users\Bailly\Desktop\Stage\ObservatoireDesTerritoires\ObservatoireDesTerritoires\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll

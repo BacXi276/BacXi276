@@ -11,10 +11,13 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Data.SqlClient;
 using ObservatoireDesTerritoires.Controller;
-using System.Windows.Input;
+using Newtonsoft.Json;
 using System.Web;
+using System.Text.Json;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Net;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Configuration;
 
 namespace ObservatoireDesTerritoires.Pages
 {
@@ -33,6 +36,10 @@ namespace ObservatoireDesTerritoires.Pages
     {
         public string ville { get; set; }
     }
+    public class FilterEpci
+    {
+        public string epci { get; set; }
+    }
     public class GraphiqueModel : PageModel
     {
         public List<MyModel> Model { get; set; }
@@ -43,6 +50,7 @@ namespace ObservatoireDesTerritoires.Pages
         public string SelectedFilter { get; set; }
         public int data { get; set; }
         public string category { get; set; }
+        public int isAdmin { get; set; }
 
         private readonly ILogger<LogModel> _logger;
 
@@ -61,6 +69,68 @@ namespace ObservatoireDesTerritoires.Pages
             {
                 string epciParam = Request.Query["epci"].ToString();
                 string Categorie = Request.Query["Categorie"].ToString();
+                string decodedEmail = "";
+                if (Request.Cookies.ContainsKey("authToken"))
+                {
+
+                    string verifEncodedJwt = HttpContext.Request.Cookies["AuthToken"];
+
+                    if (string.IsNullOrEmpty(verifEncodedJwt))
+                    {
+                        throw new Exception("Jeton manquant");
+                    }
+
+                    // Configuration de la clé de validation
+                    var builder2 = new ConfigurationBuilder()
+                            .SetBasePath(Directory.GetCurrentDirectory())
+                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                    IConfigurationRoot configuration2 = builder2.Build();
+                    string SecretKey = configuration2.GetConnectionString("Key");
+                    var validationKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
+
+                    // Configuration des paramètres de validation de jeton
+                    var validationParameters = new TokenValidationParameters
+                    {
+                        IssuerSigningKey = validationKey,
+                        ValidAudience = "Observatoire",
+                        ValidIssuer = "Observatoire",
+                        ValidateLifetime = true
+                    };
+
+                    SecurityToken validatedToken;
+
+                    try
+                    {
+                        // Validation du jeton
+                        var jwtHandler = new JwtSecurityTokenHandler();
+                        jwtHandler.ValidateToken(verifEncodedJwt, validationParameters, out validatedToken);
+                    }
+                    catch (SecurityTokenExpiredException)
+                    {
+                        // Jeton expiré
+                        //throw new Exception("Jeton expiré");
+                        //Supprimer le cookie
+                        Response.Cookies.Delete("AuthToken");
+                        //Rediriger vers la page de connexion
+                        return RedirectToPage("/Login");
+
+                    }
+                    catch (SecurityTokenInvalidSignatureException)
+                    {
+                        // Signature du jeton invalide
+                        throw new Exception("Jeton non valide");
+                    }          
+                    // Accès aux claims
+                    var jwt = (JwtSecurityToken)validatedToken;
+                    foreach (var claim in jwt.Claims)
+                    {
+                        if (claim.Type == "Privilege")
+                        {
+                            decodedEmail = claim.Value;
+                        }
+                    }
+                }
+                isAdmin = Int32.Parse(decodedEmail);
                 connection.Open();
                 string VilleQuery = "select libelle_ville from ville where id_epci = (select id_epci from epci where code_epci = '" + epciParam + "') order by libelle_ville;";
                 FilterVilles = new List<FilterVille>();
@@ -91,7 +161,7 @@ namespace ObservatoireDesTerritoires.Pages
                     string Ville_2 = Request.Query["Ville_2"].ToString();
                     SelectedVille2 = Request.Query["Ville_2"].ToString();
                     Ville_2 = Ville_2.Replace("'", "''");
-                     
+
                     if (Request.Query["Filter"].ToString() == "")
                     {
                         query = "SELECT * FROM " + Categorie + " where code_epci = @code";
@@ -104,7 +174,7 @@ namespace ObservatoireDesTerritoires.Pages
                         }
                         else
                         {
-                            query = "SELECT * FROM " + Categorie + " where code_epci = @code and libelle_data = '" + filter + "' and (libelle_ville = '" + Ville_1 + "' or libelle_ville = '" + Ville_2 + "');";
+                            query = "SELECT * FROM " + Categorie + " where libelle_data = '" + filter + "' and (libelle_ville = '" + Ville_1 + "' or libelle_ville = '" + Ville_2 + "');";
                         }
                     }
 
@@ -197,7 +267,7 @@ namespace ObservatoireDesTerritoires.Pages
         }
 
         [HttpPost]
-        public IActionResult OnPostVille()
+        public IActionResult OnPostComparaison()
         {
             if (HttpContext.Request.Cookies.ContainsKey("AuthToken"))
             {
@@ -215,6 +285,28 @@ namespace ObservatoireDesTerritoires.Pages
                 Console.WriteLine("pas passé le test");
                 return null;
             }
+        }
+
+        [HttpPost]
+        public JsonResult GetVilleSuggestions(string ville)
+        {
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            IConfigurationRoot configuration = builder.Build();
+            string connectionString = configuration.GetConnectionString("Observatoire");
+            using NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+            var query = "SELECT libelle_ville FROM ville WHERE libelle_ville LIKE @ville + '%' LIMIT 10";
+            using var command = new NpgsqlCommand(query, connection);
+            command.Parameters.AddWithValue("@ville", ville);
+            using var reader = command.ExecuteReader();
+            var suggestions = new List<string>();
+            while (reader.Read())
+            {
+                suggestions.Add(reader["libelle_ville"].ToString());
+            }
+            return new JsonResult(suggestions);
         }
 
         private GetEpci _epciController;

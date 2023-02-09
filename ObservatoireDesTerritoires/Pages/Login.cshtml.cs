@@ -109,29 +109,8 @@ namespace ObservatoireDesTerritoires.Pages
                     {
                         epci = reader.GetString(0);
                     }
-                }
-
-
-
-
-
-                command.CommandText = "SELECT isadmin FROM users WHERE mail_use = @Email";
-                int admin = 0;
-                using (NpgsqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        admin = reader.GetInt32(0);
-                    }
-                }
-                if (admin >= 1)
-                {
-                    return Redirect("/Admin");
-                }
-                else
-                {
-                    return Redirect("/Graphique?epci=" + epci);
-                }
+                }                
+                return Redirect("/Graphique?epci=" + epci);
             }
             else
             {
@@ -237,22 +216,8 @@ namespace ObservatoireDesTerritoires.Pages
 
 
 
-                        command.CommandText = "SELECT isadmin FROM users WHERE mail_use = @Email";
-                        using (NpgsqlDataReader reader = command.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                admin = reader.GetInt32(0);
-                            }
-                        }
-                        if (admin >= 1)
-                        {
-                            return Redirect("/Admin");
-                        }
-                        else
-                        {
-                            return Redirect("/Graphique?epci=" + epci);
-                        }
+                        return Redirect("/Graphique?epci=" + epci);
+
                     }
                     else
                     {

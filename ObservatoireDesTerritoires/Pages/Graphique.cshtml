@@ -162,7 +162,7 @@
             <p class="no-display mts errMsg indics_msg small" style="display: none;">Votre recherche n'a pas d'échos</p>
         </div>
         <div>
-                        @if (!string.IsNullOrEmpty(Request.Query["Filter"]))
+            @if (!string.IsNullOrEmpty(Request.Query["Filter"]))
             {
                 <h2 class="upc" style="background-color:#01695d; color:#ffffff">COMPARAISON ENTRE 2 VILLE</h2>
                 <div class="js-tabs">
@@ -179,26 +179,28 @@
                     </ul>
                     <section id="indc2_nav_1" class="js-tabcontent js-tabcontent-geo tabs__content" role="tabpanel" aria-labelledby="label_indc2_nav_1">
                         <div class="flex-container ptvs w100">
-                            <form method="post" asp-page-handler="Ville">
-                                <select id="ville" name="ville1" style="height: 28px;width: 92px;">
-                                    @foreach (var item in Model.FilterVilles)
-                                    {
-                                        <option selected="@(item.ville == Model.SelectedVille1)">@item.ville</option>
-                                    }
-                                </select>
-                                <select id="ville" name="ville2" style="height: 28px;width: 93px;">
-                                    @foreach (var item in Model.FilterVilles)
-                                    {
-                                        <option selected="@(item.ville == Model.SelectedVille2)">@item.ville</option>
-                                    }
-                                </select>                               
-                                <input type="submit" value="Comparer" style="padding: 3px 0px; width: 65px;" />
-                                <select hidden id="libelle" name="thelist" style="visibility: hidden">
-                                    @foreach (var item in Model.FilterValues)
-                                    {
-                                        <option selected="@(item.Libelle == Model.SelectedFilter)">@item.Libelle</option>
-                                    }
-                                </select>
+                            <form method="post" asp-page-handler="Comparaison">
+                                <div style="display: flex; align-items: center;">
+                                    <div style="width: 190px;">
+                                        <input id="ville1" name="ville1" type="text" placeholder="1ère ville" style="margin: 2px;">
+                                        <datalist id="ville1-suggestions"></datalist>
+                                        <select hidden id="ville" name="ville" style="height: 28px;width: 92px;">
+                                            @foreach (var item in Model.FilterVilles)
+                                            {
+                                                <option selected="@(item.ville == Model.SelectedVille1)">@item.ville</option>
+                                            }
+                                        </select>
+                                        <input id="ville2" name="ville2" type="text" placeholder="2e ville" style="margin: 2px;">
+                                        <datalist id="ville2-suggestions"></datalist>
+                                    </div>
+                                    <input type="submit" value="Comparer" style="padding: 3px 0px; width: 70px; height:30px;" />
+                                    <select hidden id="libelle" name="thelist" style="visibility: hidden">
+                                        @foreach (var item in Model.FilterValues)
+                                        {
+                                            <option selected="@(item.Libelle == Model.SelectedFilter)">@item.Libelle</option>
+                                        }
+                                    </select>
+                                </div>
                             </form>
                         </div>
 
@@ -206,16 +208,24 @@
                 </div>
             }
         </div>
-        <div class="import" style="display: flex; justify-content: center; align-items: center; margin: 20px;">
-                <bouton class="button-3" role="button">
-                    <a name="import" href="/Import">Importer un fichier</a>
+        <div class="import" style="display: flex; justify-content: center; align-items: center; margin: 12px;">
+            <bouton onclick="window.location.href='/Import'" class="button-3" role="button">
+                <a name="import" href="/Import">Importer un fichier</a>
+            </bouton>
+        </div>
+        @if (Model.isAdmin == 1)
+        {
+            <div class="import" style="display: flex; justify-content: center; align-items: center; margin: 12px;">
+                <bouton onclick="window.location.href='/Admin'" class="button-3" role="button">
+                    <a name="import" href="/Admin">Paramètres</a>
                 </bouton>
             </div>
-            <form method="post" asp-page-handler="Logout">
-            <div class="logout" style="display: flex; justify-content: center; align-items: center; margin: 20px;">
-                    <button type="submit" class="button-3" role="button" name="logout">Se déconnecter</button>
-                </div>
-            </form>
+        }
+        <form method="post" asp-page-handler="Logout">
+            <div class="logout" style="display: flex; justify-content: center; align-items: center; margin: 12px;">
+                <button type="submit" class="button-3" role="button" name="logout">Se déconnecter</button>
+            </div>
+        </form>
     </section>
     <div style="width:487.5px;">
         @if (Model.Model != null && Model.Model.Count() > 0)

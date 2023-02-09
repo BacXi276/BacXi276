@@ -9,7 +9,6 @@
         datas.push(value);
         villes.push(ville);
     }
-    console.log("Nombre de villes: " + villes.length);
     var batonCtx = document.getElementById("myBaton").getContext('2d');
     var myBarChart = new Chart(batonCtx, {
         type: 'bar',
@@ -101,3 +100,39 @@
 
     });
 }
+
+$(document).ready(function () {
+    $("#ville1").keyup(function () {
+        var ville = $("#ville1").val();
+        $.ajax({
+            type: "POST",
+            url: "nom_de_la_page_qui_fait_la_requête_SQL",
+            data: { ville: ville },
+            success: function (data) {
+                $("#ville1-suggestions").empty();
+                var suggestions = JSON.parse(data);
+                suggestions.forEach(function (suggestion) {
+                    $("#ville1-suggestions").append("<option value='" + suggestion + "'>");
+                });
+            }
+        });
+    });
+});
+
+$(document).ready(function () {
+    $("#ville2").keyup(function () {
+        var ville = $("#ville2").val();
+        $.ajax({
+            type: "POST",
+            url: "nom_de_la_page_qui_fait_la_requête_SQL",
+            data: { ville: ville },
+            success: function (data) {
+                $("#ville2-suggestions").empty();
+                var suggestions = JSON.parse(data);
+                suggestions.forEach(function (suggestion) {
+                    $("#ville2-suggestions").append("<option value='" + suggestion + "'>");
+                });
+            }
+        });
+    });
+});

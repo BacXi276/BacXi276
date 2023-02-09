@@ -272,7 +272,7 @@ code, kbd, pre, samp {
 }
 
 .h1-like:first-child, .h2-like:first-child, .h3-like:first-child, .h4-like:first-child, .h5-like:first-child, .h6-like:first-child, .p-like:first-child, blockquote:first-child, dl:first-child, h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child, ol:first-child, p:first-child, pre:first-child, ul:first-child {
-    margin-top: 10px
+    margin-top: 5px
 }
 
 li .p-like, li ol, li p, li ul {
@@ -763,7 +763,7 @@ ul.is-unstyled, ul.unstyled {
 }
 
 .article h2.h2-like, .h2-like, .mbs, h2 {
-    margin-bottom: 1rem
+    margin-bottom: 0rem
 }
 
 .mbm {
