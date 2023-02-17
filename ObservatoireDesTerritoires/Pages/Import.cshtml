@@ -20,11 +20,46 @@
                 </div>
                 <input type="number" class="NbLEnTête" name="nblentete" placeholder="Nombre de ligne d'en-tête" required />
                 <input type="submit" class="Importbutton" value="Import" />
-                </form>
-                @if (!string.IsNullOrEmpty(Model.ErrorMessage))
-                {
-                    <div class="error-message">@Model.ErrorMessage</div>
-                }
+            </form>
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="error-message">@Model.ErrorMessage</div>
+            }
         </div>
+    }
+    else
+    {
+
+        <form method="post" asp-page-handler="Submit">
+            <div class="InlineDiv">
+                <!--
+
+                @foreach (var item in Model.ColumnList)
+                {
+                    /*
+                    int index = 0;
+                    string idwithIndex = "option" + index.ToString();
+                    <div class="ImportChoose">
+                        <h2>@item.Libelle</h2>
+                        <select id="@idwithIndex" name="@idwithIndex" style="height: 28px;width: 92px;">
+                            <option value="ville"index>Ville</option>
+                            <option value="cog"index>Cog</option>
+                            <option value="libelle">Libelle</option>
+                        </select>
+                        <input type="checkbox" id="checkbox" name="checkbox">
+                    </div>
+                    index++;
+                    */
+                }
+
+                <select name="shadowValue">
+                    <option selected="selected" value="@Request.Query["Lign"]"></option>
+                </select>
+                <input type="submit"/>
+                -->
+            </div>
+        </form>
+
+
     }
 </main>
